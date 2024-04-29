@@ -1,0 +1,17 @@
+# Makefile
+CC = g++
+CFLAGS = -Wall -Wextra -std=c++11
+LIBS = -lSDL2 -lSDL2main -lSDL2_image
+
+OBJ = main.o window.o
+
+%.o: %.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+main: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+
+.PHONY: clean
+
+clean:
+	rm -f *.o main
