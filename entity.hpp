@@ -1,32 +1,24 @@
 // entity.hpp
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
 
 class Entity {
 public:
-    Entity(const std::string& name, const std::string& image_path, int x, int y, int vx, int vy);
+    Entity(SDL_Renderer* renderer, const std::string& name, const std::string& image_path, int x, int y, int width, int height);
     virtual ~Entity();
 
-    virtual void move() = 0; // Pure virtual method
-
-    void display(SDL_Renderer* renderer);
-
-    // Getters
-    std::string getName() const;
-    int getX() const;
-    int getY() const;
-
-    // Setters
-    void setX(int x);
-    void setY(int y);
-    void setVX(int vx);
-    void setVY(int vy);
+    virtual void display() = 0; // Pure virtual function
+    void move(int dx, int dy); // Declaration of the move function
 
 protected:
     std::string name;
     SDL_Texture* texture;
-
-    int x, y;   // Position
-    int vx, vy; // Velocity
+    SDL_Renderer* renderer;
+    int x, y, width, height;
 };
+
+#endif // ENTITY_HPP
