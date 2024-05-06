@@ -7,6 +7,7 @@
 #include <string>
 #include "sprite.hpp"
 #include <vector>
+#include <SDL2/SDL_mixer.h>
 
 class Window {
 public:
@@ -26,6 +27,7 @@ private:
     Entity* entity;
     Entity* player2;
     std::vector<Sprite*> collisionvector;
+    Mix_Music* gMusic;
 };
 
 #endif // WINDOW_HPP

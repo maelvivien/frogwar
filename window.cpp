@@ -4,8 +4,12 @@
 Window::Window(const std::string& image_path, int width, int height)
     : width(width), height(height), image_path(image_path) {
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        // handle error
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_VIDEO) < 0) {
+        printf("Error initializing the process\n");
+    }
+
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ){
+        printf("Audio could not be initialized\n");
     }
 
     window = SDL_CreateWindow("Window Title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
@@ -43,7 +47,13 @@ void Window::window_init(){
         collisionvector.push_back(collision);
         collision = new Sprite(renderer, 1900, 150, 120, 150);
         collisionvector.push_back(collision);
+        gMusic = Mix_LoadMUS( "sound/music.ogg");
     }
+    if (image_path == "texture/background2.png") {
+        gMusic = Mix_LoadMUS( "sound/music2.ogg");
+    }
+    Mix_PlayMusic( gMusic, -1 );
+    
 }
 
 Window::~Window() {
