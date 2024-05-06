@@ -18,7 +18,8 @@ protected:
     std::string name;
     SDL_Texture* texture;
     SDL_Renderer* renderer;
-    int x, y, width, height;
+    int x, y, width, height,yspeed;
+    int gravity = -1;
 };
 
 #endif // ENTITY_HPP

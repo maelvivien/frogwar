@@ -49,7 +49,7 @@ void Window::display() {
         }
 
         if (keyState[SDL_SCANCODE_UP]) {
-            entity->move(0, -1); // move up
+            entity->move(0, -2); // move up
         }
         if (keyState[SDL_SCANCODE_DOWN]) {
             entity->move(0, 1); // move down

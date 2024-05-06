@@ -22,5 +22,11 @@ void Entity::display() {
 
 void Entity::move(int dx, int dy) {
     x += dx;
+    if(x + dx < 0) x=0;
+    if(x + dx > 1920-width) x=1920-width;
+
+    y = y - gravity;
     y += dy;
-}
+    if(y + dy < 0) y=0;
+    if(y>1080-height)y=1080-height;
+} 
