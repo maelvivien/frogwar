@@ -20,13 +20,27 @@ void Entity::display() {
     SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
 
+
 void Entity::move(int dx, int dy) {
     x += dx;
-    if(x + dx < 0) x=0;
-    if(x + dx > 1920-width) x=1920-width;
+    if(x < 0) x = 0;
+    if(x > 1920 - width) x = 1920 - width;
 
-    y = y - gravity;
-    y += dy;
-    if(y + dy < 0) y=0;
-    if(y>1080-height)y=1080-height;
-} 
+    if(y < 1080 - height) { // Only apply gravity when not on the ground
+        yspeed += gravity;
+    } else {
+        yspeed = 0; // Stop moving downwards when on the ground
+        jumpTime = 0.0f; // Reset jump time when on the ground
+    }
+
+    if(yspeed < 0.000001f) yspeed = 0.000001f;
+    if(dy == -1 && jumpTime < maxJumpTime ) { // Only allow jumping if jumpTime is less than maxJumpTime     
+        yspeed = -0.0005f;
+        jumpTime += 0.0016f; // Increase jumpTime  
+
+    }
+
+    if(y + dy < 0) y = 0;
+    if(y > 1080 - height) y = 1080 - height;
+    y += yspeed;
+}
