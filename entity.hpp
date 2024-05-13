@@ -20,9 +20,10 @@ protected:
     SDL_Texture* texture;
     SDL_Renderer* renderer;
     int x, y, width, height;
-    float gravity = 0.02f ,yspeed = 0.0f;
+    float gravity = 1.0 ,yspeed = 0.0f,xspeed = 0.0f;
     float jumpTime = 0.0f; // New variable to track jump time
-    float maxJumpTime = 0.3f; // Maximum allowed jump time
+    float maxJumpTime = 0.5f; // Maximum allowed jump time
+    int frottement = 1,MAX_XSPEED = 1;
     
 
 };

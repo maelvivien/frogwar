@@ -76,6 +76,6 @@ void Window::display() {
         entity->display(); // Render the sprite to the renderer
 
         SDL_RenderPresent(renderer); // Update the screen with any rendering performed since the previous call
-        std::this_thread::sleep_for(std::chrono::microseconds(300));
+        std::this_thread::sleep_for(std::chrono::microseconds(2000));
     }
 }

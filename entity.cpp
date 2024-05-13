@@ -22,24 +22,38 @@ void Entity::display() {
 
 
 void Entity::move(int dx, int dy) {
-    x +=dx;
+    // lateral movement
     if(x < 0) x=0;
     if(x > 1920-width) x=1920-width;
 
+    if(dx == 1) xspeed = 5;
+    if(dx == -1) xspeed = -5;
+    if(dx==0) xspeed -= xspeed * frottement; // apply friction
+    
+    
+
+    //if(xspeed > MAX_XSPEED) xspeed = MAX_XSPEED;
+    //if(xspeed < -MAX_XSPEED) xspeed = -MAX_XSPEED;
+
+    
+    std::cout << "x: " << x << std::endl;
+    std::cout << "xspeed: " << xspeed << std::endl;
+    x += xspeed;
 
 
+    // Apply gravity    
     if(y < 1080 - height) { // Only apply gravity when not on the ground
         yspeed += gravity;
     } else {
         yspeed = 0; // Stop moving downwards when on the ground
         jumpTime = 0.0f; // Reset jump time when on the ground
-        //isJumping = 1;
  
     }
+
     
-    if(yspeed < 0.001f) yspeed = 0.001f;
+    //if(yspeed < 5) yspeed = 5;
     if(dy == -1 && jumpTime < maxJumpTime ) { // Only allow jumping if jumpTime is less than maxJumpTime     
-        yspeed = -0.005f;
+        yspeed = -4;
         jumpTime += 0.0005f; // Increase jumpTime           
     }
 
