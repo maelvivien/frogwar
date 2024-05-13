@@ -25,7 +25,8 @@ Window::Window(const std::string& image_path, int width, int height)
     texture = SDL_CreateTextureFromSurface(renderer, image);
     SDL_FreeSurface(image);
 
-    entity = new Sprite(renderer, "test1", "texture/perso.png", 800, 100, 300, 300);
+    //entity = new Sprite(renderer, "test1", "texture/frog2.png", 100, 100, 300, 250, 150, 150, 10, 10);
+    entity = new Sprite(renderer, "test1", "texture/frog2.png", 100, 100, 300, 250, 300, 300, 10, 10);
 }
 
 Window::~Window() {
@@ -42,8 +43,9 @@ void Window::display() {
     SDL_Event event;
 
     const Uint8* keyState = SDL_GetKeyboardState(NULL);
-
+    bool flip = false;
     while (running) {
+        
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
@@ -58,13 +60,16 @@ void Window::display() {
         }
         if (keyState[SDL_SCANCODE_LEFT]) {
             entity->move(-1, 0); // move left
+            flip = true;
         }
         if (keyState[SDL_SCANCODE_RIGHT]) {
             entity->move(1, 0); // move right
+            flip = false;
         }
         entity->move(0, 0); // actualisation of the entity
+
         SDL_RenderClear(renderer); // Clear the current rendering target with the drawing color
-        
+
         // Render the background
         SDL_Rect backgroundRect;
         backgroundRect.x = 0;
@@ -73,7 +78,12 @@ void Window::display() {
         backgroundRect.h = height;
         SDL_RenderCopy(renderer, texture, NULL, &backgroundRect);
 
-        entity->display(); // Render the sprite to the renderer
+        // Animate and display the sprite
+        Sprite* sprite = dynamic_cast<Sprite*>(entity);
+        if (sprite != nullptr) {
+            sprite->animate(0, flip); // Animate the first row of the sprite sheet
+            entity->display(); // Render the sprite to the renderer
+        }
 
         SDL_RenderPresent(renderer); // Update the screen with any rendering performed since the previous call
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
