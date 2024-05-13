@@ -22,25 +22,32 @@ void Entity::display() {
 
 
 void Entity::move(int dx, int dy) {
-    x += dx;
-    if(x < 0) x = 0;
-    if(x > 1920 - width) x = 1920 - width;
+    x +=dx;
+    if(x < 0) x=0;
+    if(x > 1920-width) x=1920-width;
+
+
 
     if(y < 1080 - height) { // Only apply gravity when not on the ground
         yspeed += gravity;
     } else {
         yspeed = 0; // Stop moving downwards when on the ground
         jumpTime = 0.0f; // Reset jump time when on the ground
+        //isJumping = 1;
+ 
     }
-
-    if(yspeed < 0.000001f) yspeed = 0.000001f;
+    
+    if(yspeed < 0.001f) yspeed = 0.001f;
     if(dy == -1 && jumpTime < maxJumpTime ) { // Only allow jumping if jumpTime is less than maxJumpTime     
-        yspeed = -0.0005f;
-        jumpTime += 0.0016f; // Increase jumpTime  
-
+        yspeed = -0.005f;
+        jumpTime += 0.0005f; // Increase jumpTime           
     }
 
-    if(y + dy < 0) y = 0;
-    if(y > 1080 - height) y = 1080 - height;
+    
+    if(y + dy < 0) y=0;
+    if(y > 1080 - height) y=1080 - height;
     y += yspeed;
+    
+
+
 }

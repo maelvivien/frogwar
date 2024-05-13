@@ -14,7 +14,6 @@ public:
 
     virtual void display() = 0; // Pure virtual function
     void move(int dx, int dy); // Declaration of the move function
-    
 
 protected:
     std::string name;
@@ -24,8 +23,6 @@ protected:
     float gravity = 0.02f ,yspeed = 0.0f;
     float jumpTime = 0.0f; // New variable to track jump time
     float maxJumpTime = 0.3f; // Maximum allowed jump time
-
-    
     
 
 };

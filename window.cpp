@@ -1,7 +1,6 @@
 // window.cpp
 #include "window.hpp"
 #include "sprite.hpp"
-#include "entity.hpp"
 #include <chrono>
 #include <thread>
 
@@ -38,33 +37,31 @@ Window::~Window() {
     SDL_Quit();
 }
 
-
 void Window::display() {
     bool running = true;
     SDL_Event event;
+
+    const Uint8* keyState = SDL_GetKeyboardState(NULL);
 
     while (running) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
-            else if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                    case SDLK_UP:
-                        entity->move(0, -1); // move up
-                        break;
-                    case SDLK_DOWN:
-                        entity->move(0, 1); // move down
-                        break;
-                    case SDLK_LEFT:
-                        entity->move(-1, 0); // move left
-                        break;
-                    case SDLK_RIGHT:
-                        entity->move(1, 0); // move right
-                        break;
-                }
-            }
+        }
 
+        if (keyState[SDL_SCANCODE_UP]) {
+            entity->move(0, -1); // move up
+        }
+        if (keyState[SDL_SCANCODE_DOWN]) {
+            entity->move(0, 1); // move down
+        }
+        if (keyState[SDL_SCANCODE_LEFT]) {
+            entity->move(-1, 0); // move left
+        }
+        if (keyState[SDL_SCANCODE_RIGHT]) {
+            entity->move(1, 0); // move right
+        }
         entity->move(0, 0); // actualisation of the entity
         SDL_RenderClear(renderer); // Clear the current rendering target with the drawing color
         
@@ -79,7 +76,6 @@ void Window::display() {
         entity->display(); // Render the sprite to the renderer
 
         SDL_RenderPresent(renderer); // Update the screen with any rendering performed since the previous call
-        std::this_thread::sleep_for(std::chrono::microseconds(50));
-        }
+        std::this_thread::sleep_for(std::chrono::microseconds(300));
     }
 }
