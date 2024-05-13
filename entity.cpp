@@ -26,18 +26,11 @@ void Entity::move(int dx, int dy) {
     if(x < 0) x=0;
     if(x > 1920-width) x=1920-width;
 
-    if(dx == 1) xspeed = 5;
-    if(dx == -1) xspeed = -5;
-    if(dx==0) xspeed -= xspeed * frottement; // apply friction
-    
-    
-
-    //if(xspeed > MAX_XSPEED) xspeed = MAX_XSPEED;
-    //if(xspeed < -MAX_XSPEED) xspeed = -MAX_XSPEED;
-
-    
-    std::cout << "x: " << x << std::endl;
-    std::cout << "xspeed: " << xspeed << std::endl;
+    if(dx == 1) xspeed = MAX_XSPEED;
+    if(dx == -1) xspeed = -MAX_XSPEED;
+    if(xspeed > 0) signe = 1; // à changer
+    if(xspeed < 0) signe = -1;
+    if(dx==0) xspeed -= signe * frottement; // apply friction
     x += xspeed;
 
 
@@ -50,14 +43,11 @@ void Entity::move(int dx, int dy) {
  
     }
 
-    
-    //if(yspeed < 5) yspeed = 5;
     if(dy == -1 && jumpTime < maxJumpTime ) { // Only allow jumping if jumpTime is less than maxJumpTime     
-        yspeed = -4;
-        jumpTime += 0.0005f; // Increase jumpTime           
+        yspeed = -15;
+        jumpTime += 0.05f; // Increase jumpTime           
     }
 
-    
     if(y + dy < 0) y=0;
     if(y > 1080 - height) y=1080 - height;
     y += yspeed;
