@@ -26,7 +26,7 @@ Window::Window(const std::string& image_path, int width, int height)
     SDL_FreeSurface(image);
 
     //entity = new Sprite(renderer, "test1", "texture/frog2.png", 100, 100, 300, 250, 150, 150, 10, 10);
-    entity = new Sprite(renderer, "test1", "texture/frog2.png", 100, 100, 300, 250, 300, 300, 10, 10);
+    entity = new Sprite(renderer, "test1", "texture/frogknight3.png", 100, 100, 300, 250, 100, 100, 16, 16);
 }
 
 Window::~Window() {
