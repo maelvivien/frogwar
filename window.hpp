@@ -8,6 +8,7 @@
 #include "sprite.hpp"
 #include <vector>
 #include <SDL2/SDL_mixer.h>
+#include <iostream>
 
 class Window {
 public:
@@ -15,7 +16,6 @@ public:
     void window_init();
     ~Window();
     void display();
-    bool test_collide(Entity* entity, Entity* test, int dx, int dy);
     
 
 private:
@@ -24,8 +24,9 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Texture* texture;
-    Entity* entity;
-    Entity* player2;
+    Sprite* entity;
+    Sprite* player2;
+    std::vector<Sprite*> entityvector;
     std::vector<Sprite*> collisionvector;
     Mix_Music* gMusic;
 };

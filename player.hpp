@@ -6,12 +6,13 @@
 
 class Player : public Entity {
 public:
-    Player(const std::string& name, SDL_Renderer* renderer, int x, int y, int vx, int vy);
-    ~Player() override;
+    Player(SDL_Renderer* renderer, const std::string& name, const std::string& image_path, const std::string& image_path, int x, int y, int width, int height);
+    Player(SDL_Renderer* renderer, int x, int y, int width, int height);
+    virtual ~Player();
 
-    void move() override; // Now this method correctly overrides the base class method
-
-    // ...
+    virtual void display() override;
+    void move(int dx, int dy);
+    virtual std::string& getName() override;
 };
 
 #endif // PLAYER_HPP

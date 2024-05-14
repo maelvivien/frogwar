@@ -21,8 +21,10 @@ Window::Window(const std::string& image_path, int width, int height)
     if (renderer == nullptr) {
         // handle error
     } 
-    entity = new Sprite(renderer, "test1", "texture/perso.png", 800, 100, 300, 300);
+    entity = new Sprite(renderer, "test1", "texture/perso.png", 450, 350, 200, 300);
     player2 = new Sprite (renderer, "player2", "texture/perso2.png", 800, 100, 300, 300);
+    entityvector.push_back(entity);
+    entityvector.push_back(player2);
     window_init();
 }
 
@@ -84,28 +86,28 @@ void Window::display() {
         if (keyState[SDL_SCANCODE_UP]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(entity, collisionvector[i], 0, -1)) state = false;
+                if (entity->test_collide(collisionvector[i], 0, -1)) state = false;
             }
             if (state) entity->move(0,-1); // move up
         }
         if (keyState[SDL_SCANCODE_DOWN]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(entity, collisionvector[i], 0, 1)) state = false;
+                if (entity->test_collide(collisionvector[i], 0, 1)) state = false;
             }
             if (state) entity->move(0,1); // move down
         }
         if (keyState[SDL_SCANCODE_LEFT]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(entity, collisionvector[i], -1, 0)) state = false;
+                if (entity->test_collide(collisionvector[i], -1, 0)) state = false;
             }
             if (state) entity->move(-1, 0); // move left
         }
         if (keyState[SDL_SCANCODE_RIGHT]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(entity, collisionvector[i], 1, 0)) state = false;
+                if (entity->test_collide(collisionvector[i], 1, 0)) state = false;
             }
             if (state) entity->move(1,0); // move right
         }
@@ -115,28 +117,28 @@ void Window::display() {
         if (keyState[SDL_SCANCODE_I]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(player2, collisionvector[i], 0, -1)) state = false;
+                if (player2->test_collide(collisionvector[i], 0, -1)) state = false;
             }
             if (state) player2->move(0,-1); // move up
         }
         if (keyState[SDL_SCANCODE_K]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(player2, collisionvector[i], 0, 1)) state = false;
+                if (player2->test_collide(collisionvector[i], 0, 1)) state = false;
             }
             if (state) player2->move(0,1); // move down
         }
         if (keyState[SDL_SCANCODE_J]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(player2, collisionvector[i], -1, 0)) state = false;
+                if (player2->test_collide(collisionvector[i], -1, 0)) state = false;
             }
             if (state) player2->move(-1, 0); // move left
         }
         if (keyState[SDL_SCANCODE_L]) {
             bool state = true;
             for (long unsigned int i = 0; i < collisionvector.size(); i++){
-                if (test_collide(player2, collisionvector[i], 1, 0)) state = false;
+                if (player2->test_collide(collisionvector[i], 1, 0)) state = false;
             }
             if (state) player2->move(1,0); // move right
         }
@@ -145,8 +147,30 @@ void Window::display() {
 
 
         if (keyState[SDL_SCANCODE_Q]) {
-            image_path = "texture/background2.png";
-            window_init();
+            if (1 != 1) { // Turned toward the right side of the screen
+                for (long unsigned int i = 0; i < entityvector.size(); i++) {
+                    if (entityvector[i]->getName() != entity->getName()){
+                        if (entity->test_collide(entityvector[i], 50, 0)){
+                            printf("collision\n");
+                        }
+                        else {
+                            printf("miss\n");
+                        }
+                    }
+                }
+            }
+            else {
+                for (long unsigned int i = 0; i < entityvector.size(); i++) {
+                    if (entityvector[i]->getName() != entity->getName()){
+                        if (entity->test_collide(entityvector[i], -50, 0)){
+                            printf("collision\n");
+                        }
+                        else {
+                            printf("miss\n");
+                        }
+                    }
+                }
+            }
         }
         if (keyState[SDL_SCANCODE_W]) {
             image_path = "texture/background.png";
@@ -170,8 +194,3 @@ void Window::display() {
     }
 }
 
-bool Window::test_collide(Entity* entity, Entity* test, int dx, int dy){
-    if ((entity->getX() + entity->getWidth() + dx > test->getX() && entity->getX() + dx < test->getX() + test->getWidth())
-        && (entity->getY() + entity->getHeight() + dy > test->getY() && entity->getY() + dy < test->getY() + test->getHeight())) return true;
-    return false;
-}

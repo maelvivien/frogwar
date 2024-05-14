@@ -8,22 +8,22 @@
 
 class Entity {
 public:
-    Entity(SDL_Renderer* renderer, const std::string& name, const std::string& image_path, int x, int y, int width, int height);
-    Entity(SDL_Renderer* renderer, int x, int y, int width, int height);
-    virtual ~Entity();
+
+    virtual ~Entity() {};
 
     virtual void display() = 0; // Pure virtual function
-    void move(int dx, int dy); // Declaration of the move function
-    int getX();
-    int getY();
-    int getWidth();
-    int getHeight();
+    virtual void move(int dx, int dy) = 0; // Declaration of the move function
+    virtual int getX() = 0;
+    virtual int getY() = 0;
+    virtual int getWidth() = 0;
+    virtual int getHeight() = 0;
+    virtual std::string& getName();
 
 protected:
-    std::string name;
-    SDL_Texture* texture;
-    SDL_Renderer* renderer;
-    int x, y, width, height;
+    std::string _name;
+    SDL_Texture* _texture;
+    SDL_Renderer* _renderer;
+    int _x, _y, _width, _height;
 };
 
 #endif // ENTITY_HPP
